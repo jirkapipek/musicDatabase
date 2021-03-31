@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="layout :: site-head">
+    <title th:text="titulek"></title>
+</head>
+<body>
+<header th:include="layout :: site-header"></header>
+<section>
+    <article class="news-article" id="first">
+        <h2>Skladby</h2>
+        <div th:if="${param.success}">
+            <div class="alert alert-info">Skladba přidána!</div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div th:each="song : ${songList}" class="cols interpret-index">
+                    <a th:href="'song/detail/'+ ${song.id}">
+                        <h3 th:text="${song.name}+' - '+${song.getAverageRating()+'%'}"></h3>
+                        <h4>Interpreti: <span th:each="interpret : ${song.interprets}"
+                                              th:text="${interpret.name}+' '"></span></h4>
+                        <h4>Alba: <span th:each="album : ${song.albums}" th:text="${album.name}+' '"></span></h4>
+                        Žánry: <span th:each="genre : ${song.genres}" th:text="${genre.genre}+' '"></span>
+                        <img src="https://i.pinimg.com/originals/25/0c/e1/250ce1e27b85c49afd1c745d8cb02ffa.png">
+                    </a>
+                    <div>
+                        <a th:href="'song/edit/'+${song.id}" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')"><b>Editovat </b></a><span
+                            sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')">|</span>
+                        <a th:href="'song/delete/'+${song.id}"
+                           sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')"><b>Smazat</b></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+<footer th:include="layout :: site-footer"></footer>
+</body>
+</html>

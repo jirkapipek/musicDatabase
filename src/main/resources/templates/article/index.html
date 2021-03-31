@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="layout :: site-head">
+    <title th:text="titulek"></title>
+</head>
+<body>
+<header th:include="layout :: site-header"></header>
+<section>
+    <article class="news-article content-block" id="first">
+        <h2>Články</h2>
+        <div th:if="${param.success}">
+            <div class="alert alert-info">Článek přidán!</div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div th:each="article : ${articleList}" class="border border-secondary cols component-list">
+                    <a th:href="'article/detail/'+ ${article.id}">
+                        <h3 th:text="${article.title}"></h3>
+                        <p class="info"
+                           th:text="'Napsal: '+${article.user.firstName} +' '+ ${article.user.lastName}+' | Datum publikace: '+${#dates.format(article.date, 'dd. MM. yyyy')}"></p>
+                    </a>
+                    <div>
+                        <a th:href="'article/edit/'+${article.id}"
+                           sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')"><b>Editovat </b></a><span
+                            sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')">|</span>
+                        <a th:href="'article/delete/'+${article.id}"
+                           sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')"><b>Smazat</b></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+<footer th:include="layout :: site-footer"></footer>
+</body>
+</html>

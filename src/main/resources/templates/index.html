@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: site-head">
+    <title th:text="titulek"></title>
+</head>
+<body>
+<header th:include="layout :: site-header"></header>
+<section>
+    <article class="news-article content-block" id="first">
+        <h2>Nově přidané články</h2>
+        <div class="container">
+            <div class="row">
+                <div th:each="article : ${articleList}" class="border border-secondary cols component-list">
+                    <a th:href="'article/detail/'+ ${article.id}">
+                        <h4 th:text="${article.title}"></h4>
+                        <p class="info"
+                           th:text="'Napsal: '+${article.user.firstName} +' '+ ${article.user.lastName}+' | Datum publikace: '+${#dates.format(article.date, 'dd. MM. yyyy')}"></p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </article>
+    <article class="news-article content-block">
+        <h2>Nadcházející události</h2>
+        <div class="container">
+            <div class="row">
+                <div th:each="musicEvent : ${musicEventList}" class="border border-secondary cols component-list">
+                    <a th:href="'musicEvent/detail/'+ ${musicEvent.id}">
+                        <img class="hudebni_akce_img" th:if="${musicEvent.getImageBase64() != null}"
+                             th:attr="src=@{'data:image/png;base64,'+${musicEvent.getImageBase64()}}">
+                        <div>
+                            <h3 th:text="${musicEvent.title}"></h3>
+                            <p th:text="'Datum konání: '+${#dates.format(musicEvent.startDate, 'dd.MM.yyyy')}+' - '+ ${#dates.format(musicEvent.endDate, 'dd.MM.yyyy')}"></p>
+                        </div>
+                        <p class="info"
+                           th:text="'Vložil: '+${musicEvent.user.firstName} +' '+ ${musicEvent.user.lastName}"></p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+
+<footer th:include="layout :: site-footer"></footer>
+</body>
+</html>

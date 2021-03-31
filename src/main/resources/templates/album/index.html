@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="layout :: site-head">
+    <title th:text="titulek"></title>
+</head>
+<body>
+<header th:include="layout :: site-header"></header>
+<section>
+    <article class="news-article" id="first">
+        <h2>Alba</h2>
+        <div th:if="${param.success}">
+            <div class="alert alert-info">Album přidáno!</div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div th:each="album : ${albumList}" class=" cols interpret-index">
+                    <a th:href="'album/detail/'+ ${album.id}">
+                        <h3 th:text="${album.name}+' - '+${album.getAverageRating()+'%'}"></h3>
+                        <h4>Interpreti: <span th:each="interpret : ${album.interprets}"
+                                              th:text="${interpret.name}+' '"></span></h4>
+                        Žánry: <span th:each="genre : ${album.genres}" th:text="${genre.genre}+' '"></span>
+                        <br><img th:if="${album.getImageBase64() != null}"
+                                 th:attr="src=@{'data:image/png;base64,'+${album.getImageBase64()}}">
+                    </a>
+                    <div>
+                        <a th:href="'album/edit/'+${album.id}"
+                           sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')"><b>Editovat </b></a><span
+                            sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')">|</span>
+                        <a th:href="'album/delete/'+${album.id}" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')"><b>Smazat</b></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+<footer th:include="layout :: site-footer"></footer>
+</body>
+</html>

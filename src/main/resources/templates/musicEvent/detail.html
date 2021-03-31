@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="layout :: site-head">
+    <title>Title</title>
+</head>
+<body>
+<header th:include="layout :: site-header"></header>
+<section class="content-block">
+    <article>
+        <h1 th:text="${musicEvent.title}"></h1>
+        <img class="hudebni_akce_img" th:if="${musicEvent.getImageBase64() != null}"
+             th:attr="src=@{'data:image/png;base64,'+${musicEvent.getImageBase64()}}">
+        <h3 th:text="'Datum konání: '+${#dates.format(musicEvent.startDate, 'dd.MM.yyyy')}+' - '+ ${#dates.format(musicEvent.endDate, 'dd.MM.yyyy')}"></h3>
+        <p th:utext="${musicEvent.content}"></p>
+        <p class="info" th:text="'Vložil: '+${musicEvent.user.firstName} +' '+ ${musicEvent.user.lastName}"></p>
+        <a class="info" th:href="'/musicEvent'">zpět na události</a>
+
+    </article>
+</section>
+<footer th:include="layout :: site-footer"></footer>
+</body>
+</html>

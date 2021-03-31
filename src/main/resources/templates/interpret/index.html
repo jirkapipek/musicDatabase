@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="layout :: site-head">
+    <title th:text="titulek"></title>
+</head>
+<body>
+<header th:include="layout :: site-header"></header>
+<section>
+    <article class="news-article" id="first">
+        <h2>Interpreti</h2>
+        <div th:if="${param.success}">
+            <div class="alert alert-info">Interpret přidán!</div>
+        </div>
+        <div class="container" style="margin: 0px auto">
+            <div class="row">
+                <div th:each="interpret : ${interpretList}" class="cols interpret-index">
+                    <a th:href="'interpret/detail/'+ ${interpret.id}">
+                        <h3 th:text="${interpret.name}"></h3>
+                        Žánry: <span th:each="genre : ${interpret.genres}" th:text="${genre.genre}+' '"></span>
+                        <br><img th:if="${interpret.getImageBase64() != null}"
+                                 th:attr="src=@{'data:image/png;base64,'+${interpret.getImageBase64()}}">
+                    </a>
+                    <div>
+                        <a th:href="'interpret/edit/'+${interpret.id}"
+                           sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')"><b>Editovat </b></a><span
+                            sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')">|</span>
+                        <a th:href="'interpret/delete/'+${interpret.id}"
+                           sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')"><b>Smazat</b></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+<footer th:include="layout :: site-footer"></footer>
+</body>
+</html>

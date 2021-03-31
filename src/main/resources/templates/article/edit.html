@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: site-head">
+    <title th:text="@{title}">Title</title>
+</head>
+<body>
+<header th:include="layout :: site-header"></header>
+<h2>Upravit článek</h2>
+<div th:class="${clasic}" th:text="${errorContent}"></div>
+<form action="#" th:action="@{/article/create}" th:object="${article}" method="post">
+    <p style="display:none">Id: <input type="text" th:field="*{id}" value="1"/></p>
+    <p style="display:none">Datum: <input type="date" th:field="*{date}" class="form-control"/></p>
+    <label for="title">Titulek:* </label><input type="text" th:field="*{title}" id="title" class="form-control"/>
+    <label for="content">Obsah:*(lze používat HTML tagy)</label><textarea class="form-control" cols=40 rows=20
+                                                                          id="content" th:field="*{content}"></textarea>
+    <p><input type="submit" value="Přidat" class="btn btn-success"/></p>
+</form>
+
+<footer th:include="layout :: site-footer"></footer>
+</body>
+</html>

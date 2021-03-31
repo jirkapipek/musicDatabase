@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:fragment="site-head">
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="../static/css/menu.css" th:href="@{/css/menu.css}"/>
+    <link rel="icon" href="../static/img/iconka.png" th:href="@{/img/iconka.png}"/>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <title th:text="${title}"></title>
+</head>
+<body>
+<header th:fragment="site-header">
+    <a href="index.html" th:href="@{/}"><img id="logo" src="../static/img/iconka.png" th:src="@{/img/iconka.png}"
+                                             alt="blog logo"/></a>
+    <ul th:with="view=${#httpServletRequest.getServletPath()}">
+        <li th:classappend="${#strings.equals(view, '/') ? 'active' : ''}"><a href="index.html" th:href="@{/}">Hlavní
+            stránka</a></li>
+        <li th:classappend="${#strings.equals(view, '/article') ? 'active' : ''}"><a href="article/index.html"
+                                                                                     th:href="@{/article}">Články</a>
+        </li>
+        <li th:classappend="${#strings.equals(view, '/musicEvent') ? 'active' : ''}"><a href="musicEvent/index.html"
+                                                                                        th:href="@{/musicEvent}">Hudební
+            akce</a></li>
+        <li th:classappend="${#strings.equals(view, '/interpret') ? 'active' : ''}"><a href="interpret/index.html"
+                                                                                       th:href="@{/interpret}">Interpreti</a>
+        </li>
+        <li th:classappend="${#strings.equals(view, '/album') ? 'active' : ''}"><a href="album/index.html"
+                                                                                   th:href="@{/album}">Alba</a></li>
+        <li th:classappend="${#strings.equals(view, '/song') ? 'active' : ''}"><a href="song/index.html"
+                                                                                  th:href="@{/song}">Skladby</a></li>
+
+        <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')"
+            th:classappend="${#strings.equals(view, '/administration') ? 'active' : ''}"><a
+                href="administration/index.html" th:href="@{/administration}">Administrace</a></li>
+        <li sec:authorize="hasAnyRole('ROLE_ADMIN')"
+            th:classappend="${#strings.equals(view, '/userEdit') ? 'active' : ''}"><a
+                href="administration/user.html" th:href="@{/userEdit}">Úprava rolí</a></li>
+        <li sec:authorize="!isAuthenticated()" th:classappend="${#strings.equals(view, '/login') ? 'active' : ''}"><a
+                href="register/login.html" th:href="@{/login}">Přihlásit se</a></li>
+        <li sec:authorize="!isAuthenticated()"
+            th:classappend="${#strings.equals(view, '/registration') ? 'active' : ''}"><a
+                href="register/registration.html" th:href="@{/registration}">Registrovat se</a></li>
+        <li sec:authorize="isAuthenticated()" th:classappend="${#strings.equals(view, '/logout') ? 'active' : ''}"><a
+                href="logout.html" th:href="@{/logout}">Odhlásit se</a></li>
+    </ul>
+
+</header>
+<footer th:fragment="site-footer">
+    &copy; <span th:text="${1900 + #execInfo.now.time.year}"></span> by 3XJ - Jiří Pipek, Jan Dušek, Jakub Nevyhoštěný
+</footer>
+
+</body>
+</html>

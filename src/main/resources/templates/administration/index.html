@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="layout :: site-head">
+    <title th:text="titulek"></title>
+</head>
+<body>
+<header th:include="layout :: site-header"></header>
+<section>
+    <article class="news-article" id="first">
+        <h2>Administrace - vytváření</h2>
+        <div class="list-group">
+            <a th:href="@{/article/create}" class="list-group-item list-group-item-action">Vytvořit článek</a>
+            <a th:href="@{/musicEvent/create}" class="list-group-item list-group-item-action">Vytvořit hudební
+                událost</a>
+            <a th:href="@{/interpret/create}" class="list-group-item list-group-item-action">Vytvořit interpreta</a>
+            <a th:href="@{/album/create}" class="list-group-item list-group-item-action">Vytvořit album</a>
+            <a th:href="@{/song/create}" class="list-group-item list-group-item-action">Vytvořit skladbu</a>
+        </div>
+    </article>
+    <article class="news-article">
+        <h2>Administrace - upravování/mazání</h2>
+        <div class="list-group">
+            <a th:href="@{/article}" class="list-group-item list-group-item-action">Upravit/Smazat článek</a>
+            <a th:href="@{/musicEvent}" class="list-group-item list-group-item-action">Upravit/Smazat hudební
+                událost</a>
+            <a th:href="@{/interpret}" class="list-group-item list-group-item-action">Upravit/Smazat interpreta</a>
+            <a th:href="@{/album}" class="list-group-item list-group-item-action">Upravit/Smazat album</a>
+            <a th:href="@{/song}" class="list-group-item list-group-item-action">Upravit/Smazat skladbu</a>
+        </div>
+    </article>
+</section>
+<footer th:include="layout :: site-footer"></footer>
+</body>
+</html>

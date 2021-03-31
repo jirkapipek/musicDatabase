@@ -1,0 +1,45 @@
+html, body {
+    margin: 0 !important;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif !important;
+}
+
+body {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.content {
+    flex: 1 !important;
+    margin: 15px 25px !important;
+}
+footer {
+    flex-shrink: 0 !important;
+    background-color: #333333 !important;
+    padding: 8px !important;
+    color: white !important;
+}
+
+footer > a {
+    text-decoration: none !important;
+    color: white !important;
+}
+
+.news-article{border-top: 2px solid #333; margin: 10px; padding: 10px}
+
+.news-article a{text-decoration: none !important; color: black}
+
+.component-list{margin: 10px; padding: 10px; width: 100%}
+
+#first{border: none;}
+
+section{padding: 20px}
+.content-block p{margin: 10px}
+.content-block h1{font-size: 40px; padding: 30px 0px}
+.content-block .info{text-align: right; font-style: italic; clear: left}
+.content-block .hudebni_akce_img{width: 30%; display: block; float: left; padding-right: 20px}
+.news-article .hudebni_akce_img{width: 20%; display: block; float: left; padding-right: 20px}
+.news-article h3{font-weight: bold;}
+.news-article .interpret-index{float: left; width: 30%; margin: 5px; border-radius: 10%; padding: 10px; text-align: center}
+.news-article .interpret-index img{display: block; width: 90%; margin: 0px auto; border-radius: 10%}
+.content-block .photo_img{width: 20%; margin-bottom: 40%; display: block; border-radius: 10%; float: left; margin-right: 40px;}
+.content-block .photo_img_int{width: 20%; display: block; border-radius: 10%; float: left; margin-right: 40px;}

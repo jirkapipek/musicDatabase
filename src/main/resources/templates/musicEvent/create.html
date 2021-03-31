@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: site-head">
+    <title th:text="@{title}">Title</title>
+</head>
+<body>
+<header th:include="layout :: site-header"></header>
+<section>
+    <h2>Přidat hudební akci</h2>
+    <div th:class="${clasic}" th:text="${errorContent}"></div>
+    <form action="#" th:action="@{/musicEvent/create}" th:object="${musicEvent}" method="post"
+          enctype="multipart/form-data">
+        <label for="title">Titulek:* </label><input type="text" th:field="*{title}" id="title"
+                                                    class="form-control"/></p>
+        <label for="content">Popisek:* </label><textarea class="form-control" cols=40 rows=8 id="content"
+                                                         th:field="*{content}"></textarea></p>
+        <p>Datum konání od:* <input type="date" th:field="*{startDate}" class="form-control"/></p>
+        <p>Datum konání do:* <input type="date" th:field="*{endDate}" class="form-control"/></p>
+        <p>Plakát:*<input type="file" name="file" accept="image/x-png,image/jpeg,image/jpg" class="form-control"/></p>
+        <p><input type="submit" value="Přidat" class="btn btn-success"/></p>
+    </form>
+</section>
+<footer th:include="layout :: site-footer"></footer>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="layout :: site-head">
+    <title>Title</title>
+</head>
+<body>
+<header th:include="layout :: site-header"></header>
+<section class="content-block">
+    <article>
+        <h1 th:text="${interpret.name}"></h1>
+        <img class="photo_img_int" th:if="${interpret.getImageBase64() != null}"
+             th:attr="src=@{'data:image/png;base64,'+${interpret.getImageBase64()}}">
+
+
+        <div><p th:utext="${interpret.description}"></p></div>
+        <div style="clear: left; margin-left: 25%">
+            <h3>Žánry:</h3>
+            <ul>
+                <li th:each="genre : ${interpret.genres}" th:text="${genre.genre}+' '"></li>
+            </ul>
+            <h3>Alba:</h3>
+            <ul>
+                <li th:each="album : ${interpret.albums}"><a th:href="'/album/detail/'+${album.id}"><span
+                        th:text="${album.name}"></span></a></li>
+            </ul>
+            <h3>Skladby:</h3>
+            <ul>
+                <li th:each="song : ${interpret.songs}"><a th:href="'/song/detail/'+${song.id}"><span
+                        th:text="${song.name}"></span></a></li>
+            </ul>
+        </div>
+        <div style="clear: left"><a class="info" th:href="'/interpret'">zpět na interprety</a></div>
+    </article>
+</section>
+<footer th:include="layout :: site-footer"></footer>
+</body>
+</html>

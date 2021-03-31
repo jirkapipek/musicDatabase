@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: site-head">
+    <title th:text="@{title}">Title</title>
+</head>
+<body>
+<header th:include="layout :: site-header"></header>
+<section>
+    <h2>Přidat oprávnění uživatelům</h2>
+    <div th:class="${clasic}" th:text="${errorContent}"></div>
+    <div th:if="${param.success}">
+        <div class="alert alert-info">Role přidána!</div>
+    </div>
+    <form action="#" th:action="@{/userEdit/edit}" method="post">
+        <p>Uživatelé:*
+            <select th:name="user" th:id="user" class="form-control">
+                <option th:each="user : ${userList}"
+                        th:value="${user.id}"
+                        th:utext="${user.email}"/>
+            </select></p>
+        <p>Role:*
+            <select th:name="role" th:id="role" class="form-control">
+                <option th:each="role : ${roleList}"
+                        th:value="${role.id}"
+                        th:utext="${role.name}"/>
+            </select></p>
+        <p>
+            <input type="submit" value="Přidat" class="btn btn-success"/></p>
+    </form>
+</section>
+<footer th:include="layout :: site-footer"></footer>
+</body>
+</html>

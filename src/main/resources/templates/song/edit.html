@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: site-head">
+    <title th:text="@{title}">Title</title>
+</head>
+<body>
+<header th:include="layout :: site-header"></header>
+<section>
+    <h2>Upravit skladbu</h2>
+    <div th:class="${clasic}" th:text="${errorContent}"></div>
+    <form action="#" th:action="@{/song/edit}" th:object="${song}" method="post">
+        <p style="display:none">Id: <input type="text" th:field="*{id}" value="1"/></p>
+        <p style="display:none">Time: <input type="text" th:field="*{time}" value="1"/></p>
+        <p>Název:* <input type="text" th:field="*{name}" class="form-control"/></p>
+        <p>Interpreti:*
+            <select th:field="*{interprets}" multiple class="form-control">
+                <option th:each="interpret : ${interpretList}"
+                        th:field="*{interprets}"
+                        th:value="${interpret.id}"
+                        th:utext="${interpret.name}"/>
+            </select>
+            <a th:href="@{/interpret/create}">Přidat nového interpreta</a></p>
+        <p>Žánry:*
+            <select th:field="*{genres}" multiple class="form-control">
+                <option th:each="genre : ${genreList}"
+                        th:field="*{genres}"
+                        th:value="${genre.id}"
+                        th:utext="${genre.genre}"/>
+            </select></p>
+        <p>Alba:* <select th:field="*{albums}" multiple class="form-control">
+            <option th:each="album : ${albumList}"
+                    th:field="*{albums}"
+                    th:value="${album.id}"
+                    th:utext="${album.name}"/>
+        </select><a th:href="@{/album/create}">Přidat nové album</a></p>
+        <p>
+            <input type="submit" value="Přidat" class="btn btn-success"/></p>
+    </form>
+</section>
+<footer th:include="layout :: site-footer"></footer>
+</body>
+</html>

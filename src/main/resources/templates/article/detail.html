@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="layout :: site-head">
+    <title>Title</title>
+</head>
+<body>
+<header th:include="layout :: site-header"></header>
+<section class="content-block">
+    <article>
+        <h1 th:text="${article.title}"></h1>
+        <p th:utext="${article.content}"></p>
+        <p class="info"
+           th:text="'Napsal: '+${article.user.firstName} +' '+ ${article.user.lastName}+' | Datum publikace: '+${#dates.format(article.date, 'dd. MM. yyyy')}"></p>
+        <a class="info" th:href="'/article'">zpět na články</a>
+    </article>
+</section>
+<footer th:include="layout :: site-footer"></footer>
+</body>
+</html>

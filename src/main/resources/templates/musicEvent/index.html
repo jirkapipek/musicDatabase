@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="layout :: site-head">
+    <title th:text="titulek"></title>
+</head>
+<body>
+<header th:include="layout :: site-header"></header>
+<section>
+    <article class="news-article content-block" id="first">
+        <h2>Hudební akce</h2>
+        <div th:if="${param.success}">
+            <div class="alert alert-info">Hudební událost přidána!</div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div th:each="musicEvent : ${musicEventList}" class="border border-secondary cols component-list">
+                    <a th:href="'musicEvent/detail/'+ ${musicEvent.id}">
+                        <img class="hudebni_akce_img" th:if="${musicEvent.getImageBase64() != null}"
+                             th:attr="src=@{'data:image/png;base64,'+${musicEvent.getImageBase64()}}">
+                        <div>
+                            <h3 th:text="${musicEvent.title}"></h3>
+                            <p th:text="'Datum konání: '+${#dates.format(musicEvent.startDate, 'dd.MM.yyyy')}+' - '+ ${#dates.format(musicEvent.endDate, 'dd.MM.yyyy')}"></p>
+                        </div>
+                        <p class="info"
+                           th:text="'Vložil: '+${musicEvent.user.firstName} +' '+ ${musicEvent.user.lastName}"></p>
+                    </a>
+                    <div>
+                        <a th:href="'musicEvent/edit/'+${musicEvent.id}"
+                           sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')"><b>Editovat </b></a><span
+                            sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')">|</span>
+                        <a th:href="'musicEvent/delete/'+${musicEvent.id}"
+                           sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')"><b>Smazat</b></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+<footer th:include="layout :: site-footer"></footer>
+</body>
+</html>

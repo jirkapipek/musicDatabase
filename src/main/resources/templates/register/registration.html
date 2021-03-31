@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: site-head">
+    <title>Title</title>
+</head>
+<body>
+<header th:include="layout :: site-header"></header>
+<section>
+    <article class="content-block" id="first">
+        <h2>Registrovat se</h2>
+        <div th:class="${clasic}" th:text="${errorContent}"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 col-md-offset-3">
+                    <form th:action="@{/registration}" th:object="${user}" method="post">
+                        <div class="form-group"
+                             th:classappend="${#fields.hasErrors('firstName')}? '':''">
+                            <label for="firstName" class="control-label">Jméno*</label> <input
+                                id="firstName" class="form-control" th:field="*{firstName}"/>
+                            <p th:text="${errorFirstName}"></p>
+                        </div>
+                        <div class="form-group"
+                             th:classappend="${#fields.hasErrors('lastName')}? 'has-error':''">
+                            <label for="lastName" class="control-label">Příjmení*</label> <input
+                                id="lastName" class="form-control" th:field="*{lastName}"/>
+
+                        </div>
+                        <div class="form-group"
+                             th:classappend="${#fields.hasErrors('email')}? 'has-error':''">
+                            <label for="email" class="control-label">E-mail*</label> <input
+                                id="email" class="form-control" th:field="*{email}"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="control-label">Heslo*</label> <input
+                                id="password" class="form-control" type="password"
+                                th:field="*{password}"/>
+                        </div>
+                        <div class="form-group"
+                             th:classappend="${#fields.hasErrors('confirmPassword')}? 'has-error':''">
+                            <label for="confirmPassword" class="control-label">Heslo
+                                znovu*</label> <input id="confirmPassword" class="form-control"
+                                                      type="password" th:field="*{confirmPassword}"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-success" value="Registruj">
+                            <span>Už jsi zaregistrovaný? Přihlaš se <a href="/" th:href="@{/login}">zde</a></span>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+
+<footer th:include="layout :: site-footer"></footer>
+</body>
+</html>

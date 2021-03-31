@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="layout :: site-head">
+    <title>Title</title>
+</head>
+<body>
+<header th:include="layout :: site-header"></header>
+<section class="content-block">
+    <article>
+
+    </article>
+    <article>
+        <h1 th:text="${song.name}+' - '+${song.getAverageRating()+'%'}"></h1>
+        <div class="add_comment" style="float: right; width:40%">
+            <div th:if="${rating_ok}==false">
+                <h3>Přidat hodnocení</h3>
+                <p sec:authorize="!isAuthenticated()">Pro vložení hodnocení se musíte <a
+                        th:href="'/login'">přihlásit.</a></p>
+                <form action="#" th:action="@{/song/rating/}+${song.id}" th:object="${rating}"
+                      sec:authorize="isAuthenticated()" method="post">
+                    <input type="radio" id="0" th:field="*{rating}" name="rating" value="0">
+                    <label for="0">0%</label>
+                    <input type="radio" id="25" th:field="*{rating}" name="rating" value="25">
+                    <label for="25">25%</label>
+                    <input type="radio" id="50" th:field="*{rating}" name="rating" value="50">
+                    <label for="50">50%</label>
+                    <input type="radio" id="75" th:field="*{rating}" name="rating" value="75">
+                    <label for="75">75%</label>
+                    <input type="radio" id="100" th:field="*{rating}" name="rating" value="100">
+                    <label for="100">100%</label>
+                    <input type="submit" value="Hodnotit" class="btn btn-success"/>
+                </form>
+            </div>
+            <div th:if="${rating_ok}!=false">
+                <h3>Už jsi hodnotil!</h3>
+            </div>
+            <h3>Přidat komentář</h3>
+            <p sec:authorize="!isAuthenticated()">Pro vložení komentáře se musíte <a th:href="'/login'">přihlásit.</a>
+            </p>
+            <form action="#" sec:authorize="isAuthenticated()" th:action="@{/song/comment/}+${song.id}"
+                  th:object="${commentary}" method="post">
+                <textarea th:field="*{content}" class="form-control"></textarea>
+                <p><input type="submit" value="Vložit" class="btn btn-success"/></p>
+            </form>
+        </div>
+        <img class="photo_img" src="https://i.pinimg.com/originals/25/0c/e1/250ce1e27b85c49afd1c745d8cb02ffa.png">
+        <h3>Žánry:</h3>
+        <ul>
+            <li th:each="genre : ${song.genres}" th:text="${genre.genre}+' '"></li>
+        </ul>
+        <h3>Interpreti:</h3>
+        <ul>
+            <li th:each="interpret : ${song.interprets}"><a th:href="'/interpret/detail/'+${interpret.id}"><span
+                    th:text="${interpret.name}"></span></a></li>
+        </ul>
+        <h3>Alba:</h3>
+        <ul>
+            <li th:each="album : ${song.albums}"><a th:href="'/album/detail/'+${album.id}"><span
+                    th:text="${album.name}"></span></a></li>
+        </ul>
+        <h4 th:text="'Čas skladby: '+${#dates.format(song.time, 'mm:ss')}"></h4>
+        <a style="clear:left; display: block" th:href="'/song'">zpět na skladby</a>
+    </article>
+    <article style="border-top: solid 1px grey; margin-top: 15px">
+        <h3>Komentáře</h3>
+        <div th:each="comment : ${comments}" style="border: 1px solid black; border-radius: 5%; margin: 10px;">
+            <p th:text="${comment.content}"></p>
+            <p style="text-align: right; font-style: italic"
+               th:text="'Autor: '+${comment.user.firstName} +' '+ ${comment.user.lastName}"></p>
+            <a th:href="@{/song/detail/}+${song.id}+@{/commentary/delete/}+${comment.id}"
+               th:if="${#authentication.name}==${comment.user.email} or ${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">Smazat</a>
+        </div>
+    </article>
+</section>
+<section>
+
+</section>
+<footer th:include="layout :: site-footer"></footer>
+</body>
+</html>
